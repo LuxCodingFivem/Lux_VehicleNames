@@ -9,8 +9,12 @@ RegisterCommand(Config.AddVehicleNameCommand, function(source, args)
             end
 
             local PlayerPed = PlayerPedId()
-            local vehiclename = GetDisplayNameFromVehicleModel(GetEntityModel(GetVehiclePedIsUsing(PlayerPed)))
-            TriggerServerEvent('Lux_VehicleNames:AddVehicleName', vehiclename, string)
+            if IsPedInAnyVehicle(PlayerPed) then 
+                local vehiclename = GetDisplayNameFromVehicleModel(GetEntityModel(GetVehiclePedIsUsing(PlayerPed)))
+                TriggerServerEvent('Lux_VehicleNames:AddVehicleName', vehiclename, string)
+            else
+                ESX.ShowNotification(string.format(Translation[Config.Locale]['not_in_vehicle']))
+            end
         else
             ESX.ShowNotification(string.format(Translation[Config.Locale]['no_access']))
         end
@@ -26,8 +30,12 @@ RegisterCommand(Config.EditVehicleNameCommand, function(source, args)
             end
 
             local PlayerPed = PlayerPedId()
-            local vehiclename = GetDisplayNameFromVehicleModel(GetEntityModel(GetVehiclePedIsUsing(PlayerPed)))
-            TriggerServerEvent('Lux_VehicleNames:EditVehicleName', vehiclename, string)
+            if IsPedInAnyVehicle(PlayerPed) then 
+                local vehiclename = GetDisplayNameFromVehicleModel(GetEntityModel(GetVehiclePedIsUsing(PlayerPed)))
+                TriggerServerEvent('Lux_VehicleNames:EditVehicleName', vehiclename, string)
+            else
+                ESX.ShowNotification(string.format(Translation[Config.Locale]['not_in_vehicle']))
+            end
         else
             ESX.ShowNotification(string.format(Translation[Config.Locale]['no_access']))
         end
@@ -38,8 +46,12 @@ RegisterCommand(Config.DeleteVehicleNameCommand, function(source, args)
     ESX.TriggerServerCallback('Lux_VehicleNames:getIdentifier', function(Identifier) 
         if Config.TrustedIdentifiers[Identifier] then 
             local PlayerPed = PlayerPedId()
-            local vehiclename = GetDisplayNameFromVehicleModel(GetEntityModel(GetVehiclePedIsUsing(PlayerPed)))
-            TriggerServerEvent('Lux_VehicleNames:DeleteVehicleName', vehiclename)
+            if IsPedInAnyVehicle(PlayerPed) then 
+                local vehiclename = GetDisplayNameFromVehicleModel(GetEntityModel(GetVehiclePedIsUsing(PlayerPed)))
+                TriggerServerEvent('Lux_VehicleNames:DeleteVehicleName', vehiclename)
+            else
+                ESX.ShowNotification(string.format(Translation[Config.Locale]['not_in_vehicle']))
+            end
         else
             ESX.ShowNotification(string.format(Translation[Config.Locale]['no_access']))
         end
@@ -68,3 +80,15 @@ AddEventHandler('onResourceStart', function(resourceName)
     end
     TriggerServerEvent('Lux_VehicleNames:UpdateVehicleNamesSV')
 end)
+
+TriggerEvent('chat:addSuggestion', '/AddVehicleName', string.format(Translation[Config.Locale]['add_vehicle_name_chat_suggest']),
+             { 
+                { name = string.format(Translation[Config.Locale]['chat_suggest_vehicle_name']), help = string.format(Translation[Config.Locale]['vehicle_name_chat_suggest_vehicle_name']) },
+            })
+
+TriggerEvent('chat:addSuggestion', '/EditVehicleName', string.format(Translation[Config.Locale]['edit_vehicle_name_chat_suggest']),
+             { 
+                { name = string.format(Translation[Config.Locale]['chat_suggest_vehicle_name']), help = string.format(Translation[Config.Locale]['vehicle_name_chat_suggest_vehicle_name']) },
+            })
+
+TriggerEvent('chat:addSuggestion', '/DeleteVehicleName', string.format(Translation[Config.Locale]['delete_vehicle_name_chat_suggest']),{})
