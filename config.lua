@@ -7,7 +7,7 @@ Config.EditVehicleNameCommand = 'EditVehicleName' -- Command to Edit Vehicle Nam
 Config.DeleteVehicleNameCommand = 'DeleteVehicleName' -- Command to Delete Vehicle Name
 
 Config.TrustedIdentifiers = {
-    ['char1:8d4aa45e65b00ebb8e8ef9426ec6e5ee4ff5583d'] = true, 
+   -- [LicenxeID] = true, 
 }
 
 Translation = {
