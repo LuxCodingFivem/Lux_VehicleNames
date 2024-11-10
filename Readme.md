@@ -4,7 +4,7 @@ with this script you can set the Display name off vehicles ingame
 
 have fun with the script
 
-preview: 
+preview: https://youtu.be/LKSUSxyrGyw
 
 Support on my Discord: https://luxcoding.mfpscripts.com/
 
